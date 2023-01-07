@@ -10,7 +10,7 @@ function createFeatures(earthquakeData) {
 
     // Define function, give each feature a popup
     function equakeData(feature, layer) {
-        layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}</p>`);
+        layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.mag)}</p>`);
     }
 
     // Create a GeoJSON layer, run the onEachFeature function
@@ -52,3 +52,58 @@ function createMap(earthquakes) {
     }).addTo(myMap);
 
 }
+
+// Loop through the data and create marker for each earthquake
+for (var i = 0; i < equakeData.length; i++) {
+
+    // Conditionals for earthquakeData
+    var color = "";
+    if (equakeData[i].coordinates > 10) {
+      color = "lawngreen";
+    }
+    else if (equakeData[i].coordinates > 30) {
+      color = "greenyellow";
+    }
+    else if (equakeData[i].coordinates > 50) {
+      color = "orange";
+    }
+    else if (equakeData[i].coordinates > 70) {
+        color = "darkorange";
+    }
+    else if (equakeData[i].coordinates > 90) {
+        color = "lightsalmon";
+    }
+    else {
+      color = "indianred";
+    }
+
+  // Add circles to map
+  L.circle(equakeData[i].coordinates, {
+    fillOpacity: 0.75,
+    color: "white",
+    fillColor: color,
+    // Adjust the radius.
+    radius: (equakeData[i].mag)
+  });
+}
+
+// Add legend
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        ranges = [-10, 10, 30, 50, 70, 90],
+        labels = [];
+
+    // Loop through intervals, create label with a colored square
+    for (var i = 0; i < ranges.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(ranges[i] + 1) + '"></i> ' +
+            ranges[i] + (ranges[i + 1] ? '&ndash;' + ranges[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+};
+
+legend.addTo(map);
