@@ -9,13 +9,13 @@ d3.json(queryUrl).then(function (data) {
 function createFeatures(earthquakeData) {
 
     // Define function, give each feature a popup
-    function onEachFeature(feature, layer) {
+    function equakeData(feature, layer) {
         layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}</p>`);
     }
 
     // Create a GeoJSON layer, run the onEachFeature function
     var earthquakes = L.geoJSON(earthquakeData, {
-        onEachFeature: onEachFeature
+        onEachFeature: equakeData
     });
 
     // Send earthquakes layer to the createMap function
