@@ -19,16 +19,17 @@ d3.json(queryUrl).then(function (data) {
 
         // Define function, give each feature a popup
         function onEachFeature(feature, layer) {
-            layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}</p>`);
+            layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}</p>
+            <p>Magnitude:<h3>${feature.properties.mag}</h3></p> <p>Depth:${feature.geometry.coordinates[2]}</p>`);
         }
 
         // Add circles to map
-        L.circle(earthquakeData[i].properties, {
+        L.circle(earthquakeData.properties, {
             fillOpacity: 0.75,
             color: "white",
             fillColor: color,
             // Adjust the radius.
-            radius: Math.exp(mag[i]) * 1000
+            radius: Math.exp(mag) * 1000
         });
 
         // Create a GeoJSON layer, run the onEachFeature function
