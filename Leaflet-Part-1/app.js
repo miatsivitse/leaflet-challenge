@@ -39,30 +39,6 @@ function createFeatures(earthquakeData) {
         // Send earthquakes layer to the createMap function
         createMap(earthquakes);
 
-        // Loop through the data and create marker for each earthquake
-        for (var i = 0; i < earthquakeData.length; i++) {
-
-            // Conditionals for earthquakeData
-            var color = "";
-            if (earthquakeData[i].coordinates > 10) {
-                color = "lawngreen";
-            }
-            else if (earthquakeData[i].coordinates > 30) {
-                color = "greenyellow";
-            }
-            else if (earthquakeData[i].coordinates > 50) {
-                color = "orange";
-            }
-            else if (earthquakeData[i].coordinates > 70) {
-                color = "darkorange";
-            }
-            else if (earthquakeData[i].coordinates > 90) {
-                color = "lightsalmon";
-            }
-            else {
-                color = "indianred";
-            }
-
         }
     }
 
