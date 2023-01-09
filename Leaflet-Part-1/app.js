@@ -39,7 +39,7 @@ d3.json(queryUrl).then(function (data) {
         // Send earthquakes layer to the createMap function
         createMap(earthquakes);
     }
-}
+});
 
 function createMap(earthquakes) {
         console.log(earthquakes)
@@ -91,4 +91,4 @@ function createMap(earthquakes) {
 
     legend.addTo(map);
 
-});
+};
