@@ -15,34 +15,34 @@ d3.json(queryUrl).then(function (data) {
                             'white';
     };
 
-function createFeatures(earthquakeData) {
+    function createFeatures(earthquakeData) {
 
-    // Define function, give each feature a popup
-    function onEachFeature(feature, layer) {
-        layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}</p>`);
-    }
+        // Define function, give each feature a popup
+        function onEachFeature(feature, layer) {
+            layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}</p>`);
+        }
 
-                // Add circles to map
-                L.circle(earthquakeData[i].properties, {
-                    fillOpacity: 0.75,
-                    color: "white",
-                    fillColor: color,
-                    // Adjust the radius.
-                    radius: Math.exp(mag[i]) * 1000
-                });
+        // Add circles to map
+        L.circle(earthquakeData[i].properties, {
+            fillOpacity: 0.75,
+            color: "white",
+            fillColor: color,
+            // Adjust the radius.
+            radius: Math.exp(mag[i]) * 1000
+        });
 
         // Create a GeoJSON layer, run the onEachFeature function
         var earthquakes = L.geoJSON(earthquakeData, {
-            onEachFeature: onEachFeature
+            onEachFeature: onEachFeature,
         });
 
         // Send earthquakes layer to the createMap function
         createMap(earthquakes);
-
-        }
     }
+}
 
-    function createMap(earthquakes) {
+function createMap(earthquakes) {
+        console.log(earthquakes)
 
         // Create the base layers
         var street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -71,12 +71,9 @@ function createFeatures(earthquakeData) {
             collapsed: false
         }).addTo(myMap);
 
-    }
-
     // Add legend
 
     var legend = L.control({ position: 'bottomright' });
-
     legend.onAdd = function (map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
