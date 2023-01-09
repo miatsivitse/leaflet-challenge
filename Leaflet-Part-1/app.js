@@ -25,30 +25,23 @@ d3.json(queryUrl).then(function (data) {
 
         // Add circles to map
         
-    function pointtoLayer (feature) {
-        var geojsonMarkerOptions = {
-            radius: feature.properties.mag * 1000,
+    function pointToLayer (feature, latlng) {
+        var markers = {
+            radius: feature.properties.mag * 10000,
             fillColor: getColor(feature.geometry.coordinates[2]),
             color: "#000",
             weight: 1,
             opacity: 1,
             fillOpacity: 0.8
         }
+        return L.circle(latlng, markers)
         
         };
-
-        // L.circle(earthquakeData.properties, {
-        //     fillOpacity: 0.75,
-        //     color: "white",
-        //     fillColor: color,
-        //     // Adjust the radius.
-        //     radius: Math.exp(mag) * 1000
-        // });
 
         // Create a GeoJSON layer, run the onEachFeature function
         var earthquakes = L.geoJSON(earthquakeData, {
             onEachFeature: onEachFeature,
-            geojsonMarkerOptions: geojsonMarkerOptions
+            pointToLayer: pointToLayer
         });
 
         // Send earthquakes layer to the createMap function
